@@ -15,8 +15,9 @@ class Guia_museo (models.Model):
     
     museo = models.ForeignKey(Museo, on_delete=models.CASCADE, \
             related_name="guias")
+    
     def __str__(self):
-        return self.nombre_completo
+        return f"{self.nombre_completo} ({self.anios_experiencia_guia} años exp.)"
 
 class Exposicion (models.Model):
     titulo_exhibicion = models.CharField(max_length=200)

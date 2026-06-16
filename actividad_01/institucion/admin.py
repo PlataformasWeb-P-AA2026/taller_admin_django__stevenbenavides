@@ -2,8 +2,15 @@ from django.contrib import admin
 from .models import Museo, Guia_museo, Exposicion
 
 class MuseoAdmin(admin.ModelAdmin):
-    list_display = ('nombre', 'ciudad', 'anio_fundacion')
+    list_display = ('nombre', 'ciudad', 'anio_fundacion', 'mejor_guia')
     search_fields = ('nombre', 'ciudad')
+
+    def mejor_guia (self, obj):
+        guia_top = obj.guias.order_by('-anios_experiencia_guia').first()
+        if guia_top:
+            return f"{guia_top.nombre_completo} ({guia_top.anios_experiencia_guia} años)"
+        return "Sin guías asignados"
+    mejor_guia.short_description = 'Guía con Más Experiencia'
 
 admin.site.register(Museo, MuseoAdmin)
 
